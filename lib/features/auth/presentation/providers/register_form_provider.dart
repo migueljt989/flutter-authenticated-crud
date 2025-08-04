@@ -53,8 +53,8 @@ class RegisterFormState {
 }
 
 
-class Notifier extends StateNotifier<RegisterFormState> {
-  Notifier(): super( RegisterFormState() );
+class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
+  RegisterFormNotifier(): super( RegisterFormState() );
 
   onEmailChange ( String value ) {
     final newEmail = Email.dirty(value);
@@ -65,16 +65,52 @@ class Notifier extends StateNotifier<RegisterFormState> {
     );
   }
 
-  onPasswordChange () {
+  onPasswordChange ( String value ) {
+    final newPassword = Password.dirty(value);
+    state = state.copyWith(
+      password: newPassword,
+      isValid: Formz.validate([newPassword, state.email, state.fullName])
+    );
+  }
+
+  onFullNameChange ( String value ) {
+    final newFullName = FullName.dirty(value);
+    state = state.copyWith(
+      fullName: newFullName,
+      isValid: Formz.validate([newFullName, state.email, state.password])
+    );
 
   }
 
-  onFormSubmit () {
+  onFormSubmit () async {
+    _touchEveryField();
+
+    if ( !state.isValid ) return;
+
+     print(state);
+
+    // await loginUserCallback( state.email.value, state.password.value );
 
   }
 
   _touchEveryField () {
 
+    final email = Email.dirty(state.email.value);
+    final password = Password.dirty(state.password.value);
+    final fullName = FullName.dirty(state.fullName.value);
+
+    state = state.copyWith(
+      isFormPosted: true,
+      email: email,
+      password: password,
+      fullName: fullName,
+      isValid: Formz.validate([email, password, fullName])
+    );
+
   }
   
 }
+
+final registerFormProvider = StateNotifierProvider<RegisterFormNotifier, RegisterFormState>((ref) {
+  return RegisterFormNotifier();
+});
