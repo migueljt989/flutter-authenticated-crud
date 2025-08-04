@@ -12,6 +12,7 @@ class RegisterFormState {
   final FullName fullName;
   final Email email;
   final Password password;
+  final RepeatedPassword repetedPasword;
 
   RegisterFormState({
     this.isPosting=false, 
@@ -20,6 +21,7 @@ class RegisterFormState {
     this.fullName= const FullName.pure(),
     this.email= const Email.pure(), 
     this.password= const Password.pure(),
+    this.repetedPasword= const RepeatedPassword.pure()
     });
 
   RegisterFormState copyWith ({
@@ -29,6 +31,7 @@ class RegisterFormState {
     final FullName? fullName,
     final Email? email,
     final Password? password,
+    final RepeatedPassword? repetedPasword,
     }) => RegisterFormState(
     isPosting: isPosting ?? this.isPosting ,
     isFormPosted: isFormPosted ?? this.isFormPosted ,
@@ -36,18 +39,20 @@ class RegisterFormState {
     fullName: fullName ?? this.fullName ,
     email: email ?? this.email ,
     password: password ?? this.password ,
+    repetedPasword: repetedPasword ?? this.repetedPasword,
   );
 
   @override
   String toString(){
     return '''
             RegisterFormState:
-              isPosting:    $isPosting
-              isFormPosted: $isFormPosted
-              isValid:      $isValid
-              fullName:     $fullName
-              email:        $email
-              password:     $password
+              isPosting:     $isPosting
+              isFormPosted:  $isFormPosted
+              isValid:       $isValid
+              fullName:      $fullName
+              email:         $email
+              password:      $password
+              repetedPasword $repetedPasword
            ''';
   }
 }
@@ -55,6 +60,8 @@ class RegisterFormState {
 
 class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   RegisterFormNotifier(): super( RegisterFormState() );
+
+  
 
   onEmailChange ( String value ) {
     final newEmail = Email.dirty(value);
@@ -73,11 +80,21 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
     );
   }
 
+  onRepetedPaswordChange ( String value ) {
+    final newRepeatedPassword = RepeatedPassword.dirty(password: state.password.value, value: value);
+    state = state.copyWith(
+      repetedPasword: newRepeatedPassword,
+      isValid: Formz.validate([newRepeatedPassword, state.email, state.fullName, state.password]),
+    );
+  }
+  
+
+
   onFullNameChange ( String value ) {
     final newFullName = FullName.dirty(value);
     state = state.copyWith(
       fullName: newFullName,
-      isValid: Formz.validate([newFullName, state.email, state.password])
+      isValid: Formz.validate([newFullName, state.email, state.password, state.repetedPasword])
     );
 
   }

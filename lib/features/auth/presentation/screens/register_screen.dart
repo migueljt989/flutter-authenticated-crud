@@ -24,7 +24,7 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox( height: 80 ),
+                const SizedBox( height: 40 ),
                 // Icon Banner
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,14 +70,16 @@ class _RegisterForm extends ConsumerWidget {
 
     final textStyles = Theme.of(context).textTheme;
     final registerForm = ref.watch(registerFormProvider);
+    String? matchError;
+    
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          const SizedBox( height: 30 ),
+          const SizedBox( height: 15 ),
           Text('Nueva cuenta', style: textStyles.titleMedium ),
-          const SizedBox( height: 30 ),
+          const SizedBox( height: 15 ),
 
           CustomTextFormField(
             label: 'Nombre completo',
@@ -85,7 +87,7 @@ class _RegisterForm extends ConsumerWidget {
             onChanged: ref.read(registerFormProvider.notifier).onFullNameChange,
             errorMessage: registerForm.isFormPosted ? registerForm.fullName.errorMessage : null,
           ),
-          const SizedBox( height: 30 ),
+          const SizedBox( height: 15 ),
 
           CustomTextFormField(
             label: 'Correo',
@@ -93,7 +95,7 @@ class _RegisterForm extends ConsumerWidget {
             onChanged: ref.read(registerFormProvider.notifier).onEmailChange,
             errorMessage: registerForm.isFormPosted ? registerForm.email.errorMessage : null,
           ),
-          const SizedBox( height: 30 ),
+          const SizedBox( height: 15 ),
 
           CustomTextFormField(
             label: 'Contraseña',
@@ -102,14 +104,16 @@ class _RegisterForm extends ConsumerWidget {
             errorMessage: registerForm.isFormPosted ? registerForm.password.errorMessage : null,
           ),
     
-          const SizedBox( height: 30 ),
+          const SizedBox( height: 15 ),
 
-          const CustomTextFormField(
+          CustomTextFormField(
             label: 'Repita la contraseña',
             obscureText: true,
+            onChanged:ref.read(registerFormProvider.notifier).onRepetedPaswordChange,
+            errorMessage: registerForm.isFormPosted ? registerForm.repetedPasword.error : null,
           ),
     
-          const SizedBox( height: 30 ),
+          const SizedBox( height: 15 ),
 
           SizedBox(
             width: double.infinity,
