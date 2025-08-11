@@ -21,6 +21,6 @@ class ProductMapper {
       ? image
       : '${ Environment.apiURL}/files/product/$image'
       )), 
-    user: UserMapper.userJsonToEntity( json['user'])
+    user: UserMapper.userJsonToEntity( json['user'] )
     );
 }

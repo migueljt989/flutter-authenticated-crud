@@ -1,0 +1,3 @@
+
+
+class ProdcutsNotFound implements Exception {}

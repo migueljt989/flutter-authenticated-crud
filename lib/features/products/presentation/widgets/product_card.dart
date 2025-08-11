@@ -19,7 +19,7 @@ class ProductCard extends StatelessWidget {
 
         _ImageViewer(images: product.images),
 
-        Text(product.title),
+        Text(product.title, textAlign: TextAlign.center,),
         const SizedBox(height: 20,)
       ],
     );
@@ -46,6 +46,9 @@ class _ImageViewer extends StatelessWidget {
       borderRadius: BorderRadiusGeometry.circular(20),
       child: FadeInImage(
         fit: BoxFit.cover,
+        height: 250,
+        fadeInDuration: const Duration(milliseconds: 100),
+        fadeOutDuration: const Duration(milliseconds: 200),
         placeholder: const AssetImage('assets/loaders/bottle-loader.gif'), 
         image: NetworkImage( images.first )
         ),
