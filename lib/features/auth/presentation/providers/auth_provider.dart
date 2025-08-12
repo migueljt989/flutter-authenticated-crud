@@ -49,7 +49,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   }
 
-  void registerUser ( String email, String password ) async {
+  Future<void> registerUser ( String email, String password, String fullName ) async {
 
   }
 

@@ -70,7 +70,6 @@ class _RegisterForm extends ConsumerWidget {
 
     final textStyles = Theme.of(context).textTheme;
     final registerForm = ref.watch(registerFormProvider);
-    String? matchError;
     
 
     return Padding(

@@ -2,6 +2,7 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
+import 'package:teslo_shop/features/auth/presentation/providers/providers.dart';
 import 'package:teslo_shop/features/shared/shared.dart';
 
 class RegisterFormState {
@@ -59,7 +60,10 @@ class RegisterFormState {
 
 
 class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
-  RegisterFormNotifier(): super( RegisterFormState() );
+
+  final Future<void> Function (String, String, String) registerUserCallback;
+
+  RegisterFormNotifier({ required this.registerUserCallback}): super( RegisterFormState() );
 
   
 
@@ -128,6 +132,7 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   
 }
 
-final registerFormProvider = StateNotifierProvider<RegisterFormNotifier, RegisterFormState>((ref) {
-  return RegisterFormNotifier();
+final registerFormProvider = StateNotifierProvider.autoDispose<RegisterFormNotifier, RegisterFormState>((ref) {
+  final registerUserCallback = ref.watch(authProvider.notifier).registerUser;
+  return RegisterFormNotifier(registerUserCallback: registerUserCallback);
 });
