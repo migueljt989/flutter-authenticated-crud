@@ -50,8 +50,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> registerUser ( String email, String password, String fullName ) async {
-
+    //LO QUE YO ESTOY IMPLEMENTANDO
+    await Future.delayed(const Duration(milliseconds: 500));
+    try {
+      final user = await authRepository.register(email, password, fullName);
+      _setLoggedUser(user);
+    } catch (e) {
+      throw UnimplementedError();
+    }
   }
+
 
   void checkAuthStatus () async {
     final token = await keyValueStorageService.getValue<String>('token');

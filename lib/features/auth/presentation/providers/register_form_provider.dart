@@ -108,9 +108,13 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
 
     if ( !state.isValid ) return;
 
-     print(state);
+    //  print(state);
 
-    // await loginUserCallback( state.email.value, state.password.value );
+    state = state.copyWith( isPosting: true );
+
+    await registerUserCallback( state.email.value, state.password.value, state.fullName.value );
+
+    state = state.copyWith( isPosting: false );
 
   }
 
