@@ -74,8 +74,23 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
         return;
       }
 
+      //BLOQUE DE CODIGO QUE HICE PARA ELIMINAR DUPLICIDAD DESPUES DE HABER 
+      //CREADO UN PRODUCTO DESDE EL FRONTEND
+      final setFromStateProducts = state.products.map((product) => product.id).toSet();
+      final List<Product> productsNoRept = [];
+
+      for(final product in products) {
+        final productId = product.id;
+        if ( !setFromStateProducts.contains(productId) ) {
+          productsNoRept.add(product);
+        }
+      }
+      //HASTA AQUI MI BLOQUE DE CODIGO
+
+
       state = state.copyWith(
-        products: [...state.products, ...products],
+        // products: [...state.products, ...products],
+        products: [...state.products, ...productsNoRept ],
         isLastPage: false,
         isLoading: false,
         offset: state.offset + 10,

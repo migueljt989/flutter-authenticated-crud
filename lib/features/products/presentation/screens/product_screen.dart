@@ -29,7 +29,19 @@ class ProductScreen extends ConsumerWidget {
           title: const Text('Editar producto'),
           actions: [
             IconButton(
-              onPressed: () {}, 
+              onPressed: () async {
+                final photoPath = await CameraGaleryServiceImpl().selectPhoto();
+                if ( photoPath == null ) return;
+                photoPath;
+              }, 
+              icon: const Icon(Icons.photo_library_outlined),
+              ),
+             IconButton(
+              onPressed: () async {
+                final photoPath = await CameraGaleryServiceImpl().takePhoto();
+                if ( photoPath == null ) return;
+                photoPath;
+              }, 
               icon: const Icon(Icons.camera_alt_outlined),
               ),
           ],
